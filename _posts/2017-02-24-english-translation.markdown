@@ -1,47 +1,49 @@
 ---
 layout:     post
-title:      "Ó¢Óï·­ÒëÁ·Ï°¼ÇÂ¼"
-subtitle:   "ÕâÀïÓÃÀ´¼ÇÂ¼ÎÒÃ¿ÖÜÁ½ÆªµÄÓ¢Óï·­Òë£¬Ï£ÍûÃ¿Ò»´ÎÁ·Ï°¶¼ÈÃÎÒÓĞËùÊÕ»ñ¡£"
+title:      "English Translation"
+subtitle:   "è¿™é‡Œç”¨æ¥è®°å½•æˆ‘æ¯å‘¨ä¸¤ç¯‡çš„è‹±è¯­ç¿»è¯‘ï¼Œå¸Œæœ›æ¯ä¸€æ¬¡ç»ƒä¹ éƒ½è®©æˆ‘æœ‰æ‰€æ”¶è·ã€‚"
 date:       2017-02-24 12:00:00
 author:     "SHY"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/contact-bg.jpg"
 catalog: true
 tags:
-    - Ó¢Óï
+    - è‹±è¯­
 ---
 
-### ÖĞ¹úÅ©Òµ
+### ä¸­å›½å†œä¸š
 2017-2-24
 
-Å©ÒµÊÇÖĞ¹úµÄÖØÒª²úÒµ¡£  
+å†œä¸šæ˜¯ä¸­å›½çš„é‡è¦äº§ä¸šã€‚  
 Agriculture is an important industry in China.
 
-ÖĞ¹úµÄÅ©Òµ²ú¾ÓÊÀ½çÊ×Î»£¬Ö÷Òª³ö²ú´óÃ×¡¢Ğ¡Âó¡¢ÍÁ¶¹¡¢»¨Éú¡¢²èÒ¶ºÍÃŞ»¨¡£  
+ä¸­å›½çš„å†œä¸šäº§å±…ä¸–ç•Œé¦–ä½ï¼Œä¸»è¦å‡ºäº§å¤§ç±³ã€å°éº¦ã€åœŸè±†ã€èŠ±ç”Ÿã€èŒ¶å¶å’Œæ£‰èŠ±ã€‚  
 China ranks first in agricultural output worldwide,primarily producing rice,wheat,potatoes,peanuts,tea,and cotton.
 
-¾¡¹ÜÖĞ¹úµÄ¿É¸ûµØ(arable land)½öÕ¼ÊÀ½çµÄ10%,µ«ÊÇÖĞ¹úÈ´ÎªÊÀ½çÉÏ20%µÄÈË¿ÚÌá¹©Á¸Ê³¡£  
+å°½ç®¡ä¸­å›½çš„å¯è€•åœ°(arable land)ä»…å ä¸–ç•Œçš„10%,ä½†æ˜¯ä¸­å›½å´ä¸ºä¸–ç•Œä¸Š20%çš„äººå£æä¾›ç²®é£Ÿã€‚  
 Although __accounting for__ only 10 percent of __arable land__ worldwide,China produces food for 20 percent of the world's population.
 
-ÓÉÓÚÖĞ¹úÊÇ·¢Õ¹ÖĞ¹ú¼ÒÇÒ¿É¸ûµØÑÏÖØØÑ·¦£¬ÖĞ¹úµÄÅ©ÒµÒ»Ö±ÊÇÀÍ¶¯ÃÜ¼¯ĞÍ(labor-intensive)¡£  
+ç”±äºä¸­å›½æ˜¯å‘å±•ä¸­å›½å®¶ä¸”å¯è€•åœ°ä¸¥é‡åŒ®ä¹ï¼Œä¸­å›½çš„å†œä¸šä¸€ç›´æ˜¯åŠ³åŠ¨å¯†é›†å‹(labor-intensive)ã€‚  
 Due to China's status as a developing country and its __severe shortage__ of arable land,farming in China ~has always been~ the labor-intensive industry.
 
-ÖĞ¹úÕş¸®ÃÜÇĞ¹Ø×¢Å©Òµ£¬¼Ó´óÍ¶×ÊÁ¦¶È£¬»ı¼«¿ªÕ¹¹à¸ÈºÍË®×ÊÔ´±£»¤£¬ÒÔÌáó{Å©ÒµÉú²úµÄÏÖ´ú»¯Ë®Æ½£¬Ê¹µÃÖĞ¹ú¸÷ÀàÅ©²úÆ·µÄ²úÁ¿Ñ¸ËÙÔö¼Ó¡£  
+ä¸­å›½æ”¿åºœå¯†åˆ‡å…³æ³¨å†œä¸šï¼ŒåŠ å¤§æŠ•èµ„åŠ›åº¦ï¼Œç§¯æå¼€å±•çŒæº‰å’Œæ°´èµ„æºä¿æŠ¤ï¼Œä»¥æé«™å†œä¸šç”Ÿäº§çš„ç°ä»£åŒ–æ°´å¹³ï¼Œä½¿å¾—ä¸­å›½å„ç±»å†œäº§å“çš„äº§é‡è¿…é€Ÿå¢åŠ ã€‚  
 Chinese government has been __paying close attention to__ agriculture,increasing the __investment__ and actively carrying out irrigation and water conservancy to improve the __modernization__ of agricultural production,which leads to a high growth rate in China's output of various agricultural products.
 
-È»¶ø£¬ÓÉÓÚÈË¿ÚÖÚ¶à£¬ÈË¾ùÅ©²úÆ·²úÁ¿ºÜµÍ¡£  
+ç„¶è€Œï¼Œç”±äºäººå£ä¼—å¤šï¼Œäººå‡å†œäº§å“äº§é‡å¾ˆä½ã€‚  
 However,due to the large population,the amount of the __agricultural__ products __per capita__ is small.
 
-### ´óÑ§Éú´´Òµ
+---
+
+### å¤§å­¦ç”Ÿåˆ›ä¸š
 2017-2-23
 
-½üÄêÀ´´óÑ§Éú´´Òµ(entrepreneurship)ÎÊÌâÔ½À´Ô½ÊÜµ½Éç»áµÄ¹Ø×¢,ÒòÎªÊÜ¹ı¶àÄê½ÌÓıµÄ´óÑ§ÉúÊôÓÚ¸ß¼¶ÖªÊ¶·Ö×Ó,ËûÃÇ±³¸º×ÅÉç»áµÄÖÖÖÖÆÚÍû¡£  
+è¿‘å¹´æ¥å¤§å­¦ç”Ÿåˆ›ä¸š(entrepreneurship)é—®é¢˜è¶Šæ¥è¶Šå—åˆ°ç¤¾ä¼šçš„å…³æ³¨,å› ä¸ºå—è¿‡å¤šå¹´æ•™è‚²çš„å¤§å­¦ç”Ÿå±äºé«˜çº§çŸ¥è¯†åˆ†å­,ä»–ä»¬èƒŒè´Ÿç€ç¤¾ä¼šçš„ç§ç§æœŸæœ›ã€‚  
 Educated for many years,college students bear expectations from society as senior intellectuals.Therefore,in recent years,society has paid more and more attention to the entrepreneurship of college students.
 
-ÔÚÉç»á¾­¼Ã·±ÈÙ·¢Õ¹µÄÍ¬Ê±,´óÑ§Éú´´ÒµÒ²³ÉÎªĞÂÆøÏó¡£  
+åœ¨ç¤¾ä¼šç»æµç¹è£å‘å±•çš„åŒæ—¶,å¤§å­¦ç”Ÿåˆ›ä¸šä¹Ÿæˆä¸ºæ–°æ°”è±¡ã€‚  
 With the development of our society and economy,entrepreneurship of college students has become a new phenomenon.
 
-ÏÖ´ú´óÑ§ÉúÓĞ´´ĞÂ¾«Éñ,ÓĞ¶Ô´«Í³¹ÛÄîºÍ´«Í³ĞĞÒµÌôÕ½µÄĞÅĞÄºÍÓûÍû,¶øÕâÖÖ´´ĞÂ¾«ÉñÒ²³ÉÎª´óÑ§Éú´´ÒµµÄ¶¯Á¦Ô´Èª,³ÉÎª³É¹¦´´ÒµµÄĞÅĞÄ»ù´¡¡£  
+ç°ä»£å¤§å­¦ç”Ÿæœ‰åˆ›æ–°ç²¾ç¥,æœ‰å¯¹ä¼ ç»Ÿè§‚å¿µå’Œä¼ ç»Ÿè¡Œä¸šæŒ‘æˆ˜çš„ä¿¡å¿ƒå’Œæ¬²æœ›,è€Œè¿™ç§åˆ›æ–°ç²¾ç¥ä¹Ÿæˆä¸ºå¤§å­¦ç”Ÿåˆ›ä¸šçš„åŠ¨åŠ›æºæ³‰,æˆä¸ºæˆåŠŸåˆ›ä¸šçš„ä¿¡å¿ƒåŸºç¡€ã€‚  
 Being **innovative**,college students in modern society have the confidence and **desire** to challenge the traditional ideas and professions. It is such spirit of **innovation** that makes college students **motivated** to **establish a business** and confident to achieve success.
 
-´óÑ§Éú»³´§´´ÒµÃÎÏë,Å¬Á¦´òÆ´,ÊµÏÖ×Ô¼ºµÄÀíÏë,Ö¤Ã÷×Ô¼ºµÄ¼ÛÖµ¡£  
+å¤§å­¦ç”Ÿæ€€æ£åˆ›ä¸šæ¢¦æƒ³,åŠªåŠ›æ‰“æ‹¼,å®ç°è‡ªå·±çš„ç†æƒ³,è¯æ˜è‡ªå·±çš„ä»·å€¼ã€‚  
 Bearing the dream of establishing a business,college students work hard to realize their ideals and prove themselves.
