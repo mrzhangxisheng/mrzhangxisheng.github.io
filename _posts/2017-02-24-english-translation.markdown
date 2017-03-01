@@ -10,6 +10,23 @@ tags:
     - 英语
 ---
 
+### 中国水运
+2017-3-1
+中国水运历史悠久。早在商朝就有了帆船。隋朝大运河(TheGrand Canal)为南北水运带来了很大便利。  
+China's water transport has a long history.**Early in** the Shang Dynasty,there were **sailing boats**.TheGrand Canal in the Sui Dynasty provided great convenience for south-north water transport.
+
+明朝时期，郑和七次下西洋，在其中一次航行中，他到达了非洲东海岸。  
+In the Ming Dynasty,Zheng He sailed across seas seven times and reached the east coast of Africa during one of his **voyages**.
+
+中国河流众多，海岸线长，水运条件优越。  
+China has plenty of rivers,along coastline and advantageous water transport conditions.
+
+长江是最重要的内陆航运(inland shipping)通道，其主流从四川宜宾到海洋，全长超过3000公里。重庆、武汉和南京是长江沿岸的重要港口。  
+The Yangtze River is the most important inland shipping channel.Its mainstream,from Yibin in Sichuan Province to the sea,has a total length of over 3,000 kilometers.Chongqing,Wuhan and Nanjing are importantports along the river.
+
+中国港口很多，适宜海运，如上海、大连、秦皇岛、天津、青岛、宁波、厦门、广州等。这些港口的航线能通往世界上150多个国家和地区。  
+China has favorable conditions for maritime transport with many harbors,such as Shanghai,Dalian,Qinhuangdao,Tianjin,Qingdao,Ningbo,Xiamen,Guangzhou and so on.There are shipping routes from these ports to over 150 countries and regions all over the world.
+
 ### 中国农业
 2017-2-24
 
