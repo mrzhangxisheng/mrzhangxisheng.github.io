@@ -19,7 +19,7 @@ China's water transport has a long history.**Early in** the Shang Dynasty,there 
 In the Ming Dynasty,Zheng He sailed across seas seven times and reached the east coast of Africa during one of his **voyages**.
 
 中国河流众多，海岸线长，水运条件优越。  
-China has plenty of rivers,along coastline and advantageous water transport conditions.
+China has plenty of rivers,along **coastline** and advantageous water transport conditions.
 
 长江是最重要的内陆航运(inland shipping)通道，其主流从四川宜宾到海洋，全长超过3000公里。重庆、武汉和南京是长江沿岸的重要港口。  
 The Yangtze River is the most important inland shipping channel.Its mainstream,from Yibin in Sichuan Province to the sea,has a total length of over 3,000 kilometers.Chongqing,Wuhan and Nanjing are importantports along the river.
