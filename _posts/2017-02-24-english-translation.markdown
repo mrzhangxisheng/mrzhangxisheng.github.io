@@ -11,7 +11,8 @@ tags:
 ---
 
 ### 信用卡
-2017-3-7
+2017-3-7  
+
 信用卡(credit card)是由银行发行的卡，持卡人可以凭卡赊购(buy on credit) 商品和服务。  
 A credit card is a card issued by a bank,allowing its holder to buy goods and services on credit.
 
@@ -25,7 +26,8 @@ But such convenience also brings such problems as malicious overdraft and over c
 When shopping,consumers with credit cards will buy goods more impetuously.**They will even buy something that is not often used in daily life**.
 
 ### 中国水运
-2017-3-1
+2017-3-1  
+
 中国水运历史悠久。早在商朝就有了帆船。隋朝大运河(TheGrand Canal)为南北水运带来了很大便利。  
 China's water transport has a long history.**Early in** the Shang Dynasty,there were **sailing boats**.TheGrand Canal in the Sui Dynasty provided great convenience for south-north water transport.
 
@@ -41,8 +43,10 @@ The Yangtze River is the most important inland shipping channel.Its mainstream,f
 中国港口很多，适宜海运，如上海、大连、秦皇岛、天津、青岛、宁波、厦门、广州等。这些港口的航线能通往世界上150多个国家和地区。  
 China has favorable conditions for maritime transport with many harbors,such as Shanghai,Dalian,Qinhuangdao,Tianjin,Qingdao,Ningbo,Xiamen,Guangzhou and so on.There are shipping routes from these ports to over 150 countries and regions all over the world.
 
+---
+
 ### 中国农业
-2017-2-24
+2017-2-24  
 
 农业是中国的重要产业。  
 Agriculture is an important industry in China.
@@ -65,7 +69,7 @@ However,due to the large population,the amount of the __agricultural__ products 
 ---
 
 ### 大学生创业
-2017-2-23
+2017-2-23  
 
 近年来大学生创业(entrepreneurship)问题越来越受到社会的关注,因为受过多年教育的大学生属于高级知识分子,他们背负着社会的种种期望。  
 Educated for many years,college students bear expectations from society as senior intellectuals.Therefore,in recent years,society has paid more and more attention to the entrepreneurship of college students.
