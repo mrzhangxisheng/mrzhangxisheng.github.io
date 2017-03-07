@@ -25,6 +25,8 @@ But such convenience also brings such problems as malicious overdraft and over c
 在消费的时候，使用信用卡会促使消费者更加冲动地购物，甚至购买一些平时不怎么用的商品。  
 When shopping,consumers with credit cards will buy goods more impetuously.**They will even buy something that is not often used in daily life**.
 
+---
+
 ### 中国水运
 2017-3-1  
 
