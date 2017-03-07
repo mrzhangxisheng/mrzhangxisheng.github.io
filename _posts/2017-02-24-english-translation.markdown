@@ -10,6 +10,20 @@ tags:
     - 英语
 ---
 
+### 信用卡
+2017-3-7
+信用卡(credit card)是由银行发行的卡，持卡人可以凭卡赊购(buy on credit) 商品和服务。  
+A credit card is a card issued by a bank,allowing its holder to buy goods and services on credit.
+
+使用信用卡最大的好处就是能给持卡人带来极大的方便。人们可以使用信用卡赊购他们需要的东西，并在一段时期内付淸欠款,而不必随身携带大量的现金。  
+The most obvious **advantage of credit card** is the huge convenience it brings to card holders.People can use the cards to buy what they want on credit and pay off the **debt** over a period of time instead of carrying a large sum of cash with them.
+
+但如此的便利也带来了一些问题，如恶意透支(malicious overdraft)。还会剌激使用者超前消费，容易产生月光族。  
+But such convenience also brings such problems as malicious overdraft and over consumption which will easily reduce the card users to “moonlight group”.
+
+在消费的时候，使用信用卡会促使消费者更加冲动地购物，甚至购买一些平时不怎么用的商品。  
+When shopping,consumers with credit cards will buy goods more impetuously.**They will even buy something that is not often used in daily life**.
+
 ### 中国水运
 2017-3-1
 中国水运历史悠久。早在商朝就有了帆船。隋朝大运河(TheGrand Canal)为南北水运带来了很大便利。  
