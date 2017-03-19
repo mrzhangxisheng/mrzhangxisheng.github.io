@@ -1,20 +1,20 @@
 # Site settings
-title: ShenHuiYang
-SEOTitle: ShenHuiYang's Blog
+title: ZhangXiSheng
+SEOTitle: ZhangXiSheng's Blog
 header-img: img/home-bg.jpg
-email: shenofusc@gmail.com
+email: 869011602@qq.com
 description: "关于技术与生活 | 这里是 @沈会洋 的个人博客，与你一起发现更大的世界。"
-keyword: "沈会洋 Blog"
-url: "http://shenhuiyang.me"              # your host, for absolute URL
+keyword: "张希胜 Blog"
+url: "http://zhxisheng.date"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
 # SNS settings
 RSS: false
-weibo_username:     shenofusc
-zhihu_username:     shenofusc
-github_username:    shenofusc
+#weibo_username:     shenofusc
+#zhihu_username:     shenofusc
+#github_username:    shenofusc
 #twitter_username:  shenofusc
 #facebook_username:  shenofusc
 # linkedin_username:  firstname-lastname-idxxxx
