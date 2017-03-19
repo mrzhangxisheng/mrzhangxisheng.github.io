@@ -3,7 +3,7 @@ layout:     post
 title:      "English Translation"
 subtitle:   "这里用来记录我每周两篇的英语翻译，希望每一次练习都让我有所收获。"
 date:       2017-02-24 12:00:00
-author:     "SHY"
+author:     "ZXS"
 header-img: "img/contact-bg.jpg"
 catalog: true
 tags:
