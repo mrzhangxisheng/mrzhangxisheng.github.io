@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: 869011602@qq.com
 description: "关于技术与生活 | 这里是 @张希胜 的个人博客，与你一起发现更大的世界。"
 keyword: "张希胜 Blog"
-url: "http://zhxisheng.date"              # your host, for absolute URL
+url: "http://zhangxisheng.date"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
@@ -64,7 +64,7 @@ duoshuo_share: true                     # set to false if you want to use Commen
 
 # Google Analytics
 ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: shenhuiyang.me
+ga_domain: zhangxisheng.date
 
 
 
