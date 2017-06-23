@@ -71,7 +71,7 @@ ga_domain: zhangxisheng.date
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "活成你想要的样子"
-sidebar-avatar: /img/avatar-shy.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/Desert.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
