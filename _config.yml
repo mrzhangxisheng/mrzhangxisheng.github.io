@@ -51,7 +51,7 @@ kramdown:
 #disqus_username: _your_disqus_short_name_
 
 # Duoshuo settings
-duoshuo_username:  zhangpro
+#duoshuo_username:  zhangpro
 # Share component is depend on Comment so we can NOT use share only.
 duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
@@ -70,7 +70,7 @@ ga_domain: zhangxisheng.date
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "活成你想要的样子"
+sidebar-about-description: "仁者不忧、勇者不惧、智者不惑。Bring on Tomorrow!"
 sidebar-avatar: /img/Desert.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
