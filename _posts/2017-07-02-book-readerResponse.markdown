@@ -4,7 +4,7 @@ title:      "读后感"
 subtitle:   " \"书中黄金屋\""
 date:       2017-07-2 15:27:00
 author:     "Zhangxs"
-header-img: "img/postbook-bg-2017.jpg"
+header-img: "img/post-bgbook-2017.jpg"
 catalog: true
 tags:
     - 生活
