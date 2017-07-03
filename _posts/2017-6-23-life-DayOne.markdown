@@ -4,7 +4,7 @@ title:      "杭州的日子"
 subtitle:   " \"期待、艰难、孤寂\""
 date:       2017-06-24 12:00:00
 author:     "Zhangxs"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bgxihu-2017.jpg"
 catalog: true
 tags:
     - 生活
