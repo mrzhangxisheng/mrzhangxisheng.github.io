@@ -7,10 +7,9 @@ author:     "Zhangxs"
 header-img: "img/post-bgbook-2017.jpg"
 catalog: true
 tags:
-    - 生活
+    - 阅读
 ---
 
-> “Yeah It's on. ”
 
 
 ## 概述
