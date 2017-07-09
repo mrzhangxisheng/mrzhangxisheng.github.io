@@ -28,16 +28,16 @@ git remote add origin git@github.com:****/hello.git
 ---
 不知道大家是否碰到git Bash命令窗口不能复制代码，反正我不知道怎么弄得，在这里给大家介绍一个非常好用的工具[Conemu](https://www.fosshub.com/ConEmu.html)点击即可下载。
 安装完之后打开界面,点击下拉找到 {Bash}-->{Git bash}
-![Alt text](../img/2017-gitpost-1.jpg)
+![Alt text](/img/2017-gitpost-1.jpg)
 现在打开一个会报错。
 ```
 error launching git
 ```
 别急这只是git bash要在ConEmu中的路径没有配好
 点击右上角设置-->Settings-->tasks--->{Bash::Git bash}把下面地址改成你git安装目录下bin\sh.exe就ok了
-![Alt text](../img/2017-gitpost-2.jpg)
+![Alt text](/img/2017-gitpost-2.jpg)
 改好之后在按照第一步打开界面就是这样的了。
-![Alt text](../img/2017-gitpost-3.jpg)
+![Alt text](/img/2017-gitpost-3.jpg)
 现在你就可以尽情复制粘贴了。这个工具远不止这一点好处，其他的就等你去发现了。
 ---
 git的基础命令可以参考[GIT入门](http://www.liaoxuefeng.com)这里面的教程都是入门级。
