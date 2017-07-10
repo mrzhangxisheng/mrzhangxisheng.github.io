@@ -22,7 +22,7 @@ $(document).ready(function() {
     var titleString = getTitleString();
 
 
-
+})
 
 function setBlogTxt(obj) {
 
