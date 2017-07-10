@@ -27,7 +27,18 @@ description: "活成你想要的样子"
 <!-- jQuery -->
 <script src="/js/jquery.min.js"></script>
 <script src="/js/core.js"></script>
-<div class="comments-list" id="commentsList"></div>
+<div class="panel panel-white post " id="comments">
+					<div class="post-footer">
+						<div class="input-group">
+							<input id="comment_txt" class="form-control" placeholder="Add a comment" type="text">
+							<span class="input-group-addon">
+                        <a href="#"><i class="fa fa-edit" onclick="login()"></i></a>  
+                    </span>
+						</div>
+						<ul class="comments-list" id="commentsList">
+						</ul>
+					</div>
+				</div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
