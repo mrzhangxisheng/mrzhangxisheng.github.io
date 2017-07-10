@@ -148,12 +148,13 @@ function subComment() {
     var PASSWORD = document.getElementById("txt_password").value; //
     var title = null;
     title = $("#title").text();
+    console.log(title);
     // 未开启评论
     if (typeof($("#commentsList").attr("data_comments_url")) == "undefined") {
         if (title == undefined || title == null || title == "") {
             return;
         }
-
+        console.log("*******");
         var createIssueJson = "{\"title\": \"" + title + "\"}";
         console.log(createIssueJson);
         $.ajax({
