@@ -61,7 +61,12 @@ layout: default
 				{{ content }}
 
                 <hr style="visibility: hidden;">
-
+                 <!-- UY BEGIN -->
+		 <section id="comments">
+                <div id="uyan_frame"></div>
+                <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138403"></script>
+		</section>	 
+                <!-- UY END -->
                 {% if site.duoshuo_share && site.duoshuo_username %}
                 <!-- 多说 Share start -->
                 <div class="ds-share"
@@ -88,11 +93,6 @@ layout: default
                 </div>
                 <!-- 多说 Share end-->
                 {% endif %}
-
-                <!-- UY BEGIN -->
-                <div id="uyan_frame"></div>
-                <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138403"></script>
-                <!-- UY END -->
                 <ul class="pager">
                     {% if page.previous.url %}
                     <li class="previous">
