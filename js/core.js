@@ -147,7 +147,7 @@ function subComment() {
     var USERNAME = $("#txt_username").val();
     var PASSWORD = document.getElementById("txt_password").value; //
     var title = null;
-    title = $("#title").text();
+    title = alert($(document).attr("title"));
     console.log(title+"****");
     // 未开启评论
     if (typeof($("#commentsList").attr("data_comments_url")) == "undefined") {
