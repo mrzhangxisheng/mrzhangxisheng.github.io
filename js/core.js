@@ -212,7 +212,6 @@ function subComment() {
     } else {
         console.log("未开启评论")
     }
-    setCommentURL(issuesList, title);
 }
 
 
