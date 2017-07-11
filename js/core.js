@@ -96,6 +96,7 @@ function setCommentURL(issuesList, blogName) {
                 if (title == blogName) {
                     console.log("该文章存在评论")
                     $('#commentsList').attr("data_comments_url", comments_url);
+                    $("#commentsList").removeAttr('data_comments_url');
                     setComment(comments_url);
                     break;
                 }
