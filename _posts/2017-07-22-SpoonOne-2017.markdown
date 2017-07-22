@@ -44,7 +44,7 @@ if "%PENTAHO_DI_JAVA_OPTIONS%"=="" set PENTAHO_DI_JAVA_OPTIONS="-Xmx512m" "-XX:M
 再次启动应该没问题了。
 ---
 第一篇就讲到这里,下一篇我会讲解怎么使用。
----
+
 
 
 ## 后记
