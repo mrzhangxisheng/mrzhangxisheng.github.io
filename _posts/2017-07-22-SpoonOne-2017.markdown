@@ -51,4 +51,4 @@ if "%PENTAHO_DI_JAVA_OPTIONS%"=="" set PENTAHO_DI_JAVA_OPTIONS="-Xmx512m" "-XX:M
 
 学无止境。Tomorrow Will Be Better
 
-—— Zhangxs 后记于 2017.0722
+—— Zhangxs 后记于 2017.07.22
