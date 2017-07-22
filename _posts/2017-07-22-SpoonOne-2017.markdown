@@ -1,0 +1,54 @@
+---
+layout:     post
+title:      "spoon神器(一)"
+subtitle:   " \"学无止境\""
+date:       2017-07-09 14:27:00
+author:     "Zhangxs"
+header-img: "img/post-spoonbg-2017.jpg"
+catalog: true
+tags:
+    - 技术
+---
+
+
+
+## 概述
+在这个大数据的时代，那么也就有处理这些数据nice工具。那么spoon（ETL）是我现阶段用过非常好用的工具。概括一下（功能强大，可视化高，操作简单，适用性强。）概念性的东西百度去查,这里就直接实践....
+
+<p id = "build"></p>
+---
+
+## 博文
+spoon 工具的下载，我网盘上的[Spoon下载](https://www.fosshub.com/ConEmu.html)。下载不了下面留邮箱。
+##### 所需环境及jar包
+- 因为spoon工具是java开发的，所以电脑必须安装jdk环境1.6以上。（开发人员的基本功，实在不会百度一大堆。）
+- spoon是操作数据库，那对应数据库连接的jar包是不能少的。
+
+##### 1、jdk环境都安装完之后，我们打开下载的压缩包（我提供的下载）打开如图：一个oracle、mysql的链接驱动包（其他数据库自行下载驱动）和spoon软件无需安装解压就行。
+![Alt text](/img/2017-spoonpost-1.jpg)
+##### 2、解压spoon把自己对应数据库的链接驱动包，copy到lib文件夹下面
+##### 3、一切弄完开始启动软件，在data-integration文件里面找到Spoon.bat已管理员身份运行。会发现一个黑窗口一闪没了，之后会出现如图启动窗口
+![Alt text](/img/2017-spoonpost-2.jpg)
+##### 4、等待一会就会出现spoon的操作界面了。如图：
+![Alt text](/img/2017-spoonpost-3.jpg)
+
+##### 5、如果有同学第三部一闪之后。什么也没出现，那么问题来了。有可能是你jdk环境变量没有配好，仔细检查JAVA_HIME等变量是否配好。如果jdk没有问题。那么编辑Spoon.bat文件
+
+```
+if "%PENTAHO_DI_JAVA_OPTIONS%"=="" set PENTAHO_DI_JAVA_OPTIONS="-Xms1024m" "-Xmx2048m" "-XX:MaxPermSize=256m"
+```
+替换为
+```
+if "%PENTAHO_DI_JAVA_OPTIONS%"=="" set PENTAHO_DI_JAVA_OPTIONS="-Xmx512m" "-XX:MaxPermSize=256m"
+```
+再次启动应该没问题了。
+---
+第一篇就讲到这里,下一篇我会讲解怎么使用。
+---
+
+
+## 后记
+
+学无止境。Tomorrow Will Be Better
+
+—— Zhangxs 后记于 2017.0722
