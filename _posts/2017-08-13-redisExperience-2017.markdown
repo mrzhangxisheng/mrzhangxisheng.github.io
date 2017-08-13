@@ -2,7 +2,7 @@
 layout:     post
 title:      "redis笔记"
 subtitle:   " \"学无止境\""
-date:       2017-08-13 16:38:00
+date:       2017-08-13 17:27:00
 author:     "Zhangxs"
 header-img: "img/post-redisbg_2017.jpg"
 catalog: true
