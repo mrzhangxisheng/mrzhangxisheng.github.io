@@ -4,7 +4,7 @@ title:      "spoon神器(一)"
 subtitle:   " \"学无止境\""
 date:       2017-07-09 14:27:00
 author:     "Zhangxs"
-header-img: "img/post-spoonbg-2017.jpg"
+header-img: "img/2017-spoonbg.jpg"
 catalog: true
 tags:
     - 技术
@@ -19,7 +19,7 @@ tags:
 ---
 
 ## 博文
-spoon 工具的下载，我网盘上的[Spoon下载](https://www.fosshub.com/ConEmu.html)。下载不了下面留邮箱。
+spoon 工具的下载，我网盘上的[Spoon下载](http://pan.baidu.com/s/1jIwvhKM)。下载不了下面留邮箱。
 ##### 所需环境及jar包
 - 因为spoon工具是java开发的，所以电脑必须安装jdk环境1.6以上。（开发人员的基本功，实在不会百度一大堆。）
 - spoon是操作数据库，那对应数据库连接的jar包是不能少的。
@@ -44,11 +44,11 @@ if "%PENTAHO_DI_JAVA_OPTIONS%"=="" set PENTAHO_DI_JAVA_OPTIONS="-Xmx512m" "-XX:M
 再次启动应该没问题了。
 ---
 第一篇就讲到这里,下一篇我会讲解怎么使用。
----
+
 
 
 ## 后记
 
 学无止境。Tomorrow Will Be Better
 
-—— Zhangxs 后记于 2017.0722
+—— Zhangxs 后记于 2017.07.22
