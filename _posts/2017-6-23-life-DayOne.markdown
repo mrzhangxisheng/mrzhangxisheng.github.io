@@ -1,5 +1,5 @@
 ---
-layout:     post
+layout:     hide
 title:      "杭州的日子"
 subtitle:   " \"期待、艰难、孤寂\""
 date:       2017-06-24 12:00:00
