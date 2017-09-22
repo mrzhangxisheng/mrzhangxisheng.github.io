@@ -4,7 +4,7 @@
     padding-right: 5%;
   }
 }
-@media (min-width: 1000px) {
+@media (min-width: 768px) {
   .post-container {
     padding-right: 5%;
   }
@@ -448,7 +448,7 @@ pre code {
     background: none;
   }
 }
-@media only screen and (min-width: 1170px) {
+@media only screen and (min-width: 1300px) {
   .navbar-custom {
     -webkit-transition: background-color 0.3s;
     -moz-transition: background-color 0.3s;
