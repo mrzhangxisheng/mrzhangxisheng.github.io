@@ -586,7 +586,10 @@ phone的选择性已经到1了，所以实在必要为其单独建索引。（�
 
 如果频繁按名字搜索员工，这样显然效率很低，因此我们可以考虑建索引。有两种选择，建<first_name>或<first_name, last_name>，看下两个索引的选择性：
 
+
+
 ```
+
 
 	SELECT count(DISTINCT(first_name))/count(*) AS Selectivity FROM employees.employees;
 	+-------------+
@@ -603,7 +606,9 @@ phone的选择性已经到1了，所以实在必要为其单独建索引。（�
 	+-------------+
 ```
 
+
 <first_name>显然选择性太低，<first_name, last_name>选择性很好，但是first_name和last_name加起来长度为30，有没有兼顾长度和选择性的办法？可以考虑用first_name和last_name的前几个字符建立索引，例如<first_name, left(last_name, 3)>，看看其选择性：
+
 
 ```
 
@@ -618,6 +623,7 @@ phone的选择性已经到1了，所以实在必要为其单独建索引。（�
 
 
 选择性还不错，但离0.9313还是有点距离，那么把last_name前缀加到4：
+
 
 ```
 
@@ -638,6 +644,7 @@ phone的选择性已经到1了，所以实在必要为其单独建索引。（�
 ```
 
 此时再执行一遍按名字查询，比较分析一下与建索引前的结果：
+
 
 ```
 
