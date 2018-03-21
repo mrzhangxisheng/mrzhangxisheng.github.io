@@ -1,0 +1,167 @@
+---
+layout:     post
+title:      "spring cloud"
+subtitle:   " \"Spring Cloud 微服务架构实战(二)\""
+date:       2018-03-18 18:30:00
+author:     "Zhangxs"
+header-img: "null.jpg"
+catalog: true
+tags:
+    - 技术
+---
+
+
+
+## 概述
+Spring Cloud
+接上一篇Eureka基本使用
+
+这一篇Eureka集群
+
+<p id = "build"></p>
+---
+
+## 博文
+Eureka集群架构例图:![Alt text](/img/Eureka_jq.png)
+接着上一个实现
+
+Eureka的服务注册与发现
+
+
+1、首先改造Eureka服务端
+
+
+.yml配置文件内容，修改profiles dev pro启动两个服务端。
+
+再添加彼此注册映射
+
+
+```
+
+	server:
+	  port: 8761
+	spring:
+	  profiles:
+	    active: dev
+	---
+	spring:
+	  application:
+	    name: cloud-server
+	  profiles: dev
+	server:
+	  port: 8761
+	eureka:
+	  instance:
+	    hostname: slave1
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8762/eureka
+	    
+	---
+	spring:
+	  application:
+	    name: cloud-server
+	  profiles: pro
+	server:
+	  port: 8762
+	eureka:
+	  instance:
+	    hostname: slave2
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka
+```
+
+2、改造服务提供者（客户端）
+---
+
+.yml配置文件内容。
+defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/ 逗号隔开实现多个服务端注册
+
+name: cloud-eureka-cloud 这里是注册的服务name
+
+修改profiles dev pro启动两个服务端。
+
+```
+
+	server:
+	  port: 83
+	spring:
+	  application:
+	    name: cloud-eureka-cloud
+	  profiles:
+	    active: pro
+	    
+	eureka:
+	  instance:
+	    hostname: localhost
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+      
+	---
+	spring:
+	  profiles: dev
+	server:
+	  port: 81
+	    
+	---
+	spring:
+	  profiles: pro
+	server:
+	  port: 83   
+```
+
+改造服务controller
+修改端号获取。测试时可查看是否实现了负载均衡
+
+```
+
+	import org.springframework.boot.context.properties.ConfigurationProperties;
+	import org.springframework.stereotype.Controller;
+	import org.springframework.web.bind.annotation.PathVariable;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	import org.springframework.web.bind.annotation.ResponseBody;
+	
+	@Controller
+	@ConfigurationProperties(prefix="server")
+	public class TestController {
+		
+		private static String port;
+		public void setPort(String port) { 
+		    this.port = port; 
+		  } 
+		
+		@RequestMapping(value = "/person/{personId}", method = RequestMethod.GET)
+		@ResponseBody
+		public String findPerson(@PathVariable("personId") Integer personId) {
+			
+			return "张三"+port;
+		}
+```
+
+3、服务调用者不做跟改。不过也可以集群一样修改端口号就可以了
+---
+
+4、启动项目 先启动服务端再启动客户端
+---
+
+Eureka控制台:![Alt text](/img/Eureka_jq8761.png)
+
+Eureka控制台:![Alt text](/img/Eureka_jq8762.png)
+
+测试结果:![Alt text](/img/Eureka-jq1.png)
+
+测试结果:![Alt text](/img/Eureka-jq2.png)
+
+发现同样的请求而服务提供者在变化。可以发现已经做了负载均衡。
+
+
+## 后记
+这就是spring cloud 工具之Eureka集群
+
+
+学无止境。Tomorrow Will Be Better
+
+—— Zhangxs 后记于 2018.0318
