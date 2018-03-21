@@ -54,7 +54,7 @@ Spring boot架构搭建时的笔记
 ```
 
 
-###注解@RestController   @Controller类注解    
+### 注解@RestController   @Controller类注解    
 
 @RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用。
 
@@ -67,7 +67,7 @@ Spring boot架构搭建时的笔记
 
 
 
-###配置文件application.properties     
+### 配置文件application.properties     
 配置文件值的拿取 @Value(value="${roncoo.secret}")
 
 配置随机值添加
@@ -99,7 +99,7 @@ Spring boot架构搭建时的笔记
 
 ```
 
-###配置文件优先级
+### 配置文件优先级
 
 1、当前目录下的一个/config子目录
 
@@ -110,13 +110,13 @@ Spring boot架构搭建时的笔记
 4、classpath模版路径（root）
 
 
-###.properties配置文件激活及多环境配置
+### .properties配置文件激活及多环境配置
 
 在主的配置文件中添加
 spring.profiles.active=test
 这样就会激活application_test.properties(新建) 配置文件 
 
-####jar 的直接启动也可以多环境启动
+#### jar 的直接启动也可以多环境启动
 java -jar jar包路径 --spring.profiles.active=test(test:用application_test.properties文件启动)
 
 
@@ -153,7 +153,7 @@ java -jar jar包路径 --spring.profiles.active=test(test:用application_test.pr
 ```
 
 
-###logback_spring.xml 日志配置  spring boot自带logback
+### logback_spring.xml 日志配置  spring boot自带logback
 logging.config=classpath:logback-roncoo.xml
 private static final Logger logger = LoggerFactory.getLogger("this Controller name .class")
 
@@ -245,7 +245,7 @@ FreeMarker java配置文件
 
 ```
 
-###Thymeleaf  模版引擎配置
+### Thymeleaf  模版引擎配置
 包引入
 ```
 
@@ -270,9 +270,9 @@ FreeMarker java配置文件
 ```
 
 
-###error 自定义错误页面 
+### error 自定义错误页面 
 
-####第一种、
+#### 第一种、
 定义controller实现ErrorController
 
 ```
@@ -325,7 +325,7 @@ FreeMarker java配置文件
 在templates/error/下面创建错误页面
 
 
-####第二种、定义异常统一处理
+#### 第二种、定义异常统一处理
 
 添加统一处理类。类上添加注解@ControllerAdvice
 
@@ -369,11 +369,11 @@ controller代码
 ```
 
 
-###servlet  filter  listenter  
+### servlet  filter  listenter  
 执行顺序
 initListener-->FilerInit-->doFiler-->servlet-->destroyFiler-->destroyListener
 
-####servlet的使用
+#### servlet的使用
 
 
 ```
@@ -399,7 +399,7 @@ initListener-->FilerInit-->doFiler-->servlet-->destroyFiler-->destroyListener
 
 ```
 
-####filter的使用
+#### filter的使用
 
 ```
 
@@ -431,7 +431,7 @@ initListener-->FilerInit-->doFiler-->servlet-->destroyFiler-->destroyListener
 ```
 
 
-####listener的使用
+#### listener的使用
 
 ```
 
@@ -450,8 +450,8 @@ initListener-->FilerInit-->doFiler-->servlet-->destroyFiler-->destroyListener
 
 ```
 
-###Bean注册
-####方法一
+### Bean注册
+#### 方法一
 
 ```
 
@@ -472,7 +472,7 @@ initListener-->FilerInit-->doFiler-->servlet-->destroyFiler-->destroyListener
 		}
 ```
 
-####方法二
+#### 方法二
 
 ```
 
@@ -486,7 +486,7 @@ initListener-->FilerInit-->doFiler-->servlet-->destroyFiler-->destroyListener
 		}
 ```
 
-####方法三
+#### 方法三
 
 ```
 
@@ -501,9 +501,9 @@ initListener-->FilerInit-->doFiler-->servlet-->destroyFiler-->destroyListener
 ```
 
 
-###cors 跨域资源共享
+### cors 跨域资源共享
 
-####方法一  
+#### 方法一  
 
 新建Cors类 加上注解@Configuration
 
@@ -529,7 +529,7 @@ initListener-->FilerInit-->doFiler-->servlet-->destroyFiler-->destroyListener
 	}
 ```
 
-####方法二
+#### 方法二
 
 新建Cors类 加上注解@Configuration
 extends  WebMvcConfigurerAdapter
@@ -550,7 +550,7 @@ extends  WebMvcConfigurerAdapter
 
 ```
 
-####方法三 
+#### 方法三 
 在需要的controller的方法上加上注解@CrossOrigin
 
 ```
@@ -563,7 +563,7 @@ extends  WebMvcConfigurerAdapter
 ```
 
 
-###文件上传
+### 文件上传
 注意文件名保存时避免中文，不然会在liunx下面出现问题。
 需求需要原有的文件名称可以在数据库添加相应的字段存储。
 
@@ -581,9 +581,9 @@ spring.http.multipart.max-request-size =100Mb
 
 
 
-###数据库
+### 数据库
 
-#mysql
+#### mysql
 
 ```
 
@@ -593,7 +593,7 @@ spring.http.multipart.max-request-size =100Mb
 	spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 ```
 
-###redis主要配置
+### redis主要配置
 
  包引入
 ```
@@ -622,7 +622,7 @@ redis如果连接不上
 	  port: 6379            端口
 ```
 
-####redis添加类简单增删改
+#### redis添加类简单增删改
 
 ```
 
@@ -659,9 +659,9 @@ redis如果连接不上
 	}
 ```
 
-###caching 缓存
+### caching 缓存
 
-####ehCache
+#### ehCache
 
 
  包引入
@@ -760,9 +760,9 @@ src/main/resources/下面创建config/ehcache.xml
 ```
 
 
-###异步消息服务 JMS与AMQP
+### 异步消息服务 JMS与AMQP
 
-####activemq
+#### activemq
 
 官网直接下载解压
 
