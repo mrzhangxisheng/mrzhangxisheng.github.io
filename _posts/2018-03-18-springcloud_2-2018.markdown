@@ -151,9 +151,9 @@ Eureka控制台:![Alt text](/img/Eureka_jq8761.png)
 
 Eureka控制台:![Alt text](/img/Eureka_jq8762.png)
 
-测试结果:![Alt text](/img/Eureka-jq1.png)
+测试结果:![Alt text](/img/Eureka_jq1.png)
 
-测试结果:![Alt text](/img/Eureka-jq2.png)
+测试结果:![Alt text](/img/Eureka_jq2.png)
 
 发现同样的请求而服务提供者在变化。可以发现已经做了负载均衡。
 
