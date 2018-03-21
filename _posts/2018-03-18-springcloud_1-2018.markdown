@@ -144,7 +144,7 @@ fetchRegistry: false
 defaultZone: http://localhost:8761/eureka/ 服务端地址
 name: cloud-eureka-cloud 这里是注册的服务name
 
-端口默认8761
+端口默认80
 
 ```
 
