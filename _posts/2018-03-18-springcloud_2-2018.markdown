@@ -22,7 +22,7 @@ Spring Cloud
 ---
 
 ## 博文
-Eureka集群架构例图:![Alt text](/img/Eureka_jq.png)
+Eureka集群架构例图: ![Alt text](/img/Eureka_jq.png)
 接着上一个实现
 
 Eureka的服务注册与发现
