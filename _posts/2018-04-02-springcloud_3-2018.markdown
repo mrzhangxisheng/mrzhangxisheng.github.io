@@ -62,7 +62,7 @@ ribbon.eureka.enabled=false
 
 这时我们对于服务实例的维护就又将回归到使用<client>.ribbon.listOfServers参数配置的方式来实现了。
 
-<client>: Eureka维护的服务名
+client Eureka维护的服务名
 
 ---
 
