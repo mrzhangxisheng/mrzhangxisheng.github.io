@@ -1,0 +1,421 @@
+---
+layout:     post
+title:      "spring cloud"
+subtitle:   " \"Spring Cloud 微服务架构实战(三)\""
+date:       2018-04-02 18:30:00
+author:     "Zhangxs"
+header-img: "null.jpg"
+catalog: true
+tags:
+    - 技术
+---
+
+
+
+## 概述
+Spring Cloud  Eureka结合自定义Ribbon
+
+负载均衡
+
+负载均衡分为客户端负载均衡和服务端负载均衡。ribbon就是客服端负载均衡，顾名思义客服端负载均衡就是所有客户端节点都维护着自己要访问的服务端清单， 而这些服务端的清单来自于服务注册中心，比如（二）中介绍的Eureka服务端。同服务端负载均衡的架构类似， 在客户端负载均衡中也需要心跳去维护服务端清单的健康性， 只是这个步骤需要与服务注册中心配合完成。 在Spring Cloud实现的服务治理框架中， 默认会创建针对各个服务治理框架的Ribbon自动化整合配置通过Spring Cloud Ribbon的封装， 我们在微服务架构中使用客户端负载均衡调用非常
+简单， 只需要如下两步：
+
+1. 服务提供者只需要启动多个服务实例并注册到
+一 个注册中心或是多个相关联的服务
+注册中心。
+
+2. 服务消费者直接通过调用被 @LoadBalanced 注解修饰过的 RestTemplate 来实现面
+向服务的接口调用。
+
+
+<p id = "build"></p>
+---
+
+## 博文
+
+接着上一个Eureka集群实现
+
+Eureka的集群实现中其实已经用到了ribbon
+
+为什么没有对ribbon进行配置都能用到呢？
+
+当在Spring Cloud的应用中同时引入Spring Cloud Ribbon和Spring Cloud Eureka依赖时，会触发Eureka中 实现的对Ribbon的自动化配置。这时 ServerList的维护机制实现将被
+com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList的实例所覆盖， 该实现会将服务清单列表交给Eureka的服务治理机制来进行维护；IPng的实现将被com.netflix.niws.loadbalancer.NIWSDiscoveryPing的实例所覆盖， 该实现也将实例检查的任务交给了 服务治理框架来进行维护。 默认情况下，用于获取实例请求的ServerLis七接口实现将采用Spring Cloud Eureka中封装的org.springframework.
+cloud.netflix.ribbon.eureka.DomainExtractingServerList,其目的是为了让实例维护策略更加通用
+
+但我们也可以对其配置
+
+```
+
+	ribbon:
+	  eureka:
+	    enabled: false  
+
+	cloud-ribbon-service:
+	  ribbon:
+	    listOfServers: localhost:81,localhost:83   
+
+```
+
+通过参数配置的方式来禁用Eureka对伈bbon服务实例的维护实现。
+ribbon.eureka.enabled=false 
+
+这时我们对于服务实例的维护就又将回归到使用<client>.ribbon.listOfServers参数配置的方式来实现了。
+
+<client>: Eureka维护的服务名
+
+---
+
+##### 自定义SpringCloud Ribbon实现结合Eureka
+
+
+###### Eureka服务端
+
+1、Eureka服务端
+
+```
+
+
+pom.xml
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka-server</artifactId>
+		</dependency>
+
+启动类
+
+		import org.springframework.boot.SpringApplication;
+		import org.springframework.boot.autoconfigure.SpringBootApplication;
+		import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+		
+		@SpringBootApplication
+		@EnableEurekaServer
+		public class FirstServerApplication {
+			public static void main(String[] args) {
+				SpringApplication.run(FirstServerApplication.class,args);
+			}
+		}
+
+.yml
+
+	server:
+	  port: 8761
+	spring:
+	  profiles:
+	    active: pro
+	---
+	spring:
+	  application:
+	    name: cloud-server
+	  profiles: dev
+	server:
+	  port: 8761
+	eureka:
+	  instance:
+	    hostname: slave1
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8762/eureka
+	    
+	---
+	spring:
+	  application:
+	    name: cloud-server
+	  profiles: pro
+	server:
+	  port: 8762
+	eureka:
+	  instance:
+	    hostname: slave2
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka
+
+```
+
+
+2、cloud-ribbon-client
+
+```
+
+pom.xml
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+	   <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+  		<dependency>
+       		<groupId>org.springframework.boot</groupId>
+     	  	<artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+启动类 
+
+	
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+	import org.springframework.cloud.netflix.ribbon.RibbonClient;
+	import org.springframework.context.annotation.Bean;
+	
+	import com.netflix.loadbalancer.IPing;
+	import com.netflix.loadbalancer.IRule;
+	import com.zhangxs.cloud.strategy.MyPing;
+	import com.zhangxs.cloud.strategy.MyRule;
+	
+	@SpringBootApplication
+	@EnableEurekaClient
+	@RibbonClient(name="cloud-ribbon-client")
+	public class FirstServer {
+		
+		@Bean
+		public IRule getRule() {
+		return new MyRule();
+		}
+		@Bean
+		public IPing getPing() {
+		return new MyPing();
+		}
+		
+		public static void main(String[] args) {
+			SpringApplication.run(FirstServer.class,args);
+		}
+	}
+
+调用controller
+
+	import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+	import org.springframework.context.annotation.Bean;
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.stereotype.Controller;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	import org.springframework.web.bind.annotation.ResponseBody;
+	import org.springframework.web.client.RestTemplate;
+	
+	@Controller
+	@Configuration
+	public class TestController {
+		@Bean
+		@LoadBalanced//启动负载均衡
+		public RestTemplate getRestTemplate() {
+		return new RestTemplate();
+		}
+		
+		@RequestMapping(value = "/router", method = RequestMethod.GET)
+		@ResponseBody
+		public String router() {
+		RestTemplate restTpl = getRestTemplate();
+		// 根据应用名称调用服务
+		String json = restTpl.getForObject(
+		"http://cloud-ribbon-service/person/1", String.class);
+		return json;
+		}
+	}
+
+自定义策略类
+
+	import com.netflix.loadbalancer.ILoadBalancer;
+	import com.netflix.loadbalancer.IRule;
+	import com.netflix.loadbalancer.Server;
+	
+	
+	public class MyRule implements IRule{
+		ILoadBalancer ib;
+		
+		@Override
+		public Server choose(Object arg0) {//策略代码实现
+			// 获取全部的服务器
+			List<Server> servers = ib.getAllServers();
+			// 只返回第一个 Server 对象
+			return servers.get(0);
+		}
+	
+		@Override
+		public ILoadBalancer getLoadBalancer() {
+			return this.ib;
+		}
+	
+		@Override
+		public void setLoadBalancer(ILoadBalancer ib) {
+			this.ib=ib;
+		}
+	
+	}
+
+自定义ping类
+
+	import com.netflix.loadbalancer.IPing;
+	import com.netflix.loadbalancer.Server;
+	
+	public class MyPing implements IPing{
+	
+		@Override
+		public boolean isAlive(Server server) {
+			System.out.println("自定义 Ping 类，服务器信息：" + server.getHostPort());
+			return true;
+		}
+	
+	}
+
+.yml
+
+	server:
+	  port: 82
+	spring:
+	  application:
+	    name: cloud-ribbon-client
+	  profiles:
+	    active: dev
+	eureka:
+	  instance:
+	    hostname: localhost
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/    
+	ribbon:
+	  eureka:
+	    enabled: false      
+	    
+	cloud-ribbon-service:
+	  ribbon:
+	    listOfServers: localhost:81,localhost:83    
+        如果在启动类注册了，并且加了 @RibbonClient(name="cloud-ribbon-client") 下面的配置也就不要加了，相反这边加了，启动类就不需要了。
+	    NFLoadBalancerRuleClassName: com.zhangxs.cloud.strategy.MyRule 
+	    NFLoadBalancerPingClassName: com.zhangxs.cloud.strategy.MyPing
+	
+	---
+	spring:
+	  profiles: dev
+	server:
+	  port: 82
+	    
+	---
+	spring:
+	  profiles: pro
+	server:
+	  port: 84
+
+```
+
+3、服务类 cloud-ribbon-service
+
+```
+
+pom.xml
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+	   <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+
+启动类
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+	
+	@SpringBootApplication
+	@EnableEurekaClient
+	public class FirstServer {
+		
+		public static void main(String[] args) {
+			SpringApplication.run(FirstServer.class,args);
+		}
+	}
+
+
+服务接口
+
+	import org.springframework.boot.context.properties.ConfigurationProperties;
+	import org.springframework.stereotype.Controller;
+	import org.springframework.web.bind.annotation.PathVariable;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	import org.springframework.web.bind.annotation.ResponseBody;
+	
+	@Controller
+	@ConfigurationProperties(prefix="server")
+	public class TestController {
+		
+		private static String port;
+		public void setPort(String port) { 
+		    this.port = port; 
+		  } 
+		
+		@RequestMapping(value = "/person/{personId}", method = RequestMethod.GET)
+		@ResponseBody
+		public String findPerson(@PathVariable("personId") Integer personId) {
+			
+			return "张三"+port;
+		}
+	}
+
+.yml
+
+	server:
+	  port: 83
+	spring:
+	  application:
+	    name: cloud-ribbon-service
+	  profiles:
+	    active: dev
+	    
+	eureka:
+	  instance:
+	    hostname: localhost
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+	      
+	---
+	spring:
+	  profiles: dev
+	server:
+	  port: 81
+	    
+	---
+	spring:
+	  profiles: pro
+	server:
+	  port: 83   
+
+```
+
+---
+
+Eureka控制台:![Alt text](/img/Eureka_jq8761.png)
+
+Eureka控制台:![Alt text](/img/Eureka_jq8762.png)
+
+测试结果:![Alt text](/img/spring_cloud_ribbon.png)
+
+发现一段时间会执行ping
+
+几次调用都使用策略配置的service
+
+
+## 后记
+这就是spring cloud 工具之Eureka集群结合ribbon
+
+ribbon的一些其他配置
+
+• cloud-ribbon-service.ribbon.ConnectTimeout： 请求连接的超时时间。
+• cloud-ribbon-service.ribbon.ReadTimeout： 请求处理的超时时间。
+• cloud-ribbon-service.ribbon.OkToRetryOnAllOpera七ions: 对所有操作请求都进行重试。
+• cloud-ribbon-service.ribbon.MaxAutoRetriesNextServer: 切换实例的重试次数。
+• cloud-ribbon-service.ribbon.MaxAutoRetries: 对当前实例的重试次数。
+
+
+学无止境。Tomorrow Will Be Better
+
+—— Zhangxs 后记于 2018.0402
