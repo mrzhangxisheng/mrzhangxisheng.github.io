@@ -245,7 +245,7 @@ name: cloud-eureka-cloud_invoker 这里是注册的服务name
 	      defaultZone: http://localhost:8761/eureka/
 ```
 
-编写服务调用controller
+编写服务调用controller  @LoadBalanced开启负载均衡
 
 ```
 
