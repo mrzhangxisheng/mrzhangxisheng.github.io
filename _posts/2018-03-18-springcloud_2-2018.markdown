@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Spring Cloud 微服务架构实战(二)"
-subtitle:   " \"Spring Cloud Eureka集群\""
+subtitle:   "Spring Cloud Eureka集群"
 date:       2018-03-18 18:30:00
 author:     "Zhangxs"
 header-img: "null.jpg"
