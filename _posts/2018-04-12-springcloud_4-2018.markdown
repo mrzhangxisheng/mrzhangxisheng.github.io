@@ -1,0 +1,238 @@
+---
+layout:     post
+title:      "Spring Cloud 微服务架构实战(四)"
+subtitle:   "spring cloud Hystrix使用"
+date:       2018-04-12 13:30:00
+author:     "Zhangxs"
+header-img: "null.jpg"
+catalog: true
+tags:
+    - 技术
+---
+
+
+
+## 概述
+Spring Cloud  Hystrix断路器
+
+分布式架构中 断路器模式当某个服务单元发生故障之后， 通过断路器的故障监控（类似熔断保险丝）， 向调用方返回一个错误响应， 而不是长时间的等待。 这样就不会使得线程因调用故障服务被长时间占用不释放，避免了故障在分布式系统中的蔓延。
+
+该框架的目标在于通过控制那些访问远程系统、 服务和第三方库的节点， 从而对延迟和故障提供更强大的容错能力。Hystrix具备服务降级、 服务熔断、 线程和信号隔离、 请求缓存、 请求合并以及服务监控等强大功能。
+
+
+
+<p id = "build"></p>
+---
+
+## 博文
+
+接着上一个Eureka集群Ribbon自定义实现
+
+本实例的架构服务关系代码都在在（三）的基础上修改
+
+关系如图:![Alt text](/img/hystrix_1.png)
+
+##### ribbon consume的更改
+--- 
+
+maven pom.xml添加hystrix依赖
+
+```
+
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-hystrix</artifactId>
+		</dependency>
+
+```
+
+启动类 添加@EnableCircuitBreaker注解开启断路器功能
+
+```
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+	import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+	
+	@EnableCircuitBreaker
+	@SpringBootApplication
+	@EnableEurekaClient
+	public class FirstServer {
+		public static void main(String[] args) {
+			SpringApplication.run(FirstServer.class,args);
+		}
+	}
+
+```
+
+controller 服务编写
+
+```
+
+	import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+	import org.springframework.context.annotation.Bean;
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.stereotype.Controller;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	import org.springframework.web.bind.annotation.ResponseBody;
+	import org.springframework.web.client.RestTemplate;
+	
+	import com.netflix.hystrix.HystrixCommandGroupKey;
+	import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+	import com.zhangxs.cloud.hystrix.HelloHystrix;
+	
+	@Controller
+	@Configuration
+	public class TestController {
+		@Bean
+		@LoadBalanced//启动负载均衡
+		public RestTemplate getRestTemplate() {
+		return new RestTemplate();
+		}
+		
+		
+		/**
+		 * 注解配置实现
+		 * @return
+		 */
+		@RequestMapping(value = "/hystrixTest1", method = RequestMethod.GET)
+		@ResponseBody
+		@HystrixCommand(fallbackMethod = "routerFallback")//注解配置回调方法
+		public String hystrixTest1() {
+			RestTemplate restTpl = getRestTemplate();
+			long start = System.currentTimeMillis();
+			// 根据应用名称调用服务
+			String json = restTpl.getForObject(
+			"http://cloud-ribbon-service/personHystrix/1", String.class);
+			long end = System.currentTimeMillis();
+			System.out.println("Spend time : "+ (end - start));
+			return json;
+		}
+		//回调方法
+		public String routerFallback(){
+			return "error";
+		}
+		
+		
+		/**
+		 * 自定义类实现 新建 HelloHystrix.class
+		 * @return
+		 */
+		@RequestMapping(value = "/hystrixTest2", method = RequestMethod.GET)
+		@ResponseBody
+		public String hystrixTest() {
+			RestTemplate restTpl = getRestTemplate();
+			HelloHystrix hystrix = new HelloHystrix(HystrixCommandGroupKey.Factory.asKey("ExampleGroup"),restTpl,"http://cloud-ribbon-service/personHystrix/1");
+			return hystrix.execute();//执行命令
+		}
+		
+	}
+
+HelloHystrix.class
+
+	import org.springframework.web.client.RestTemplate;
+	
+	import com.netflix.hystrix.HystrixCommand;
+	import com.netflix.hystrix.HystrixCommandGroupKey;
+	
+	public class HelloHystrix extends HystrixCommand<String>{
+		
+		private RestTemplate rest;
+	
+		private String url;
+		
+        //构造
+		public HelloHystrix(HystrixCommandGroupKey group,RestTemplate rest,String url) {
+			super(group);//线程分组设置
+			this.rest=rest;
+			this.url=url;
+		}
+	
+	
+		//执行方法
+		@Override
+		protected String run() throws Exception {
+			String json = rest.getForObject(
+					url, String.class);
+			return json;
+		}
+		
+		//错误回掉重写
+		@Override
+		protected String getFallback() {
+			return "error:请求出错";
+		}
+		
+		//缓存等实现
+	}
+
+```
+
+#### ribbon service 更改
+为了实现熔断器效果在controller添加休眠来代表故障/请求超时  hystrix默认超时时间1000ms
+
+```
+
+	import org.springframework.boot.context.properties.ConfigurationProperties;
+	import org.springframework.stereotype.Controller;
+	import org.springframework.web.bind.annotation.PathVariable;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	import org.springframework.web.bind.annotation.ResponseBody;
+	
+	@Controller
+	@ConfigurationProperties(prefix="server")
+	public class TestController {
+		
+		private static String port;
+		public void setPort(String port) { 
+		    this.port = port; 
+		  } 
+		
+		@RequestMapping(value = "/personHystrix/{personId}", method = RequestMethod.GET)
+		@ResponseBody
+		public String findpersonHystrix(@PathVariable("personId") Integer personId) {
+			//让处理线程等待几秒钟
+			int sleepTime = new Random().nextInt(3000);//默认超时时间是1000
+			System.out.println("sleepTime:" + sleepTime);
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return "张三"+port;
+		}
+	}
+
+```
+
+测试 服务启动
+
+1. eureka-sevice  
+2. eureka-client
+3. 访问http://localhost:82/hystrixTest1  http://localhost:82/hystrixTest1
+4. 查看后台日志打印随机休眠时间在1000ms一下的都访问正常，超过的都调用了回调方法。
+
+
+## 后记
+这就是spring cloud hystrix基本使用
+
+至于自定义配置、降级服务、异常处理、缓存配置等。多看看文档就可以了。
+
+hystrix参考文献
+
+1. https://github.com/Netflix/Hystrix
+2. https://github.com/Netflix/Hystrix/wiki/How-To-Use
+3. http://hot66hot.iteye.com/blog/2155036
+
+参考博文
+
+1. http://hot66hot.iteye.com/blog/2155036
+2. https://www.jianshu.com/p/39763a0bd9b8
+
+
+学无止境。Tomorrow Will Be Better
+
+—— Zhangxs 后记于 2018.0412
