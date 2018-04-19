@@ -57,7 +57,7 @@ cloud.netflix.ribbon.eureka.DomainExtractingServerList,其目的是为了让实�
 
 ```
 
-通过参数配置的方式来禁用Eureka对伈bbon服务实例的维护实现。
+通过参数配置的方式来禁用Eureka对ribbon服务实例的维护实现。
 ribbon.eureka.enabled=false 
 
 这时我们对于服务实例的维护就又将回归到使用<client>.ribbon.listOfServers参数配置的方式来实现了。
