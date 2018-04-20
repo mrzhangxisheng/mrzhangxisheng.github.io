@@ -1,0 +1,172 @@
+---
+layout:     post
+title:      "Spring Cloud 微服务架构实战(五)"
+subtitle:   "spring cloud Feign使用"
+date:       2018-04-19 9:50:00
+author:     "Zhangxs"
+header-img: "null.jpg"
+catalog: true
+tags:
+    - 技术
+---
+
+
+
+## 概述
+Spring Cloud  Feign声明式服务调用
+
+在前面的服务之间的调用使用的都是RestTemplate但是在实际开发中，由于对服务依赖的调用可能不止于 一 处，往往 一 个接口会被多处调用，所以我们通常都会针对各个微服务自行封装 一 些客户端类来包装这些依赖服务的调用。 这个时候我们会发现，由于 RestTemplate 的封装，几乎每一个调用都是简单的模板化内容。 Spring Cloud Feign在此基础上在封装，我们只需创建 一 个接口并用注解的方式来配置它， 即可完成对服务提供方的接口绑定。
+
+
+
+<p id = "build"></p>
+---
+
+## 博文
+
+在之前学习的基础上添加代码
+
+##### feign-consume
+--- 
+
+maven pom.xml添加feign依赖
+
+```
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-feign</artifactId>
+		</dependency>
+
+```
+
+启动类 添加@EnableFeignClients注解开启功能
+
+```
+
+	@SpringBootApplication
+	@EnableEurekaClient //Eureka客户端
+	@EnableFeignClients //feign功能开启
+	public class FirstServer {
+		public static void main(String[] args) {
+			SpringApplication.run(FirstServer.class,args);
+		}
+	}
+
+```
+
+feign-consume的service服务编写  添加FeignService.class
+
+```
+
+	import org.springframework.cloud.netflix.feign.FeignClient;
+	import org.springframework.web.bind.annotation.PathVariable;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	
+	/**
+	 * 指定服务名来绑定服务， 然后再使用 Spring MVC 的注解来绑定具体该服务提供的 REST 接口。
+	 * @author zxs
+	 */
+	@FeignClient(name="cloud-ribbon-service")//服务名是服务提供者在eureka注册的application name
+	public interface FeignService {
+		
+		@RequestMapping(value = "/person/{id}", method = RequestMethod.GET)
+		String feignPerson(@PathVariable("id") Integer id);//接口跟服务提供者一致
+	}
+
+feign-consume controller调用service
+
+	@Autowired
+	private FeignService feignService; 
+	
+	@RequestMapping(value = "/feign_test", method = RequestMethod.GET)
+	@ResponseBody
+	public String feign_test() {
+		return feignService.feignPerson(1);
+	}
+
+```
+
+#### 服务提供者
+
+
+```
+
+这边只要有一个相对应的接口实现就可以了
+
+	@RequestMapping(value = "/person/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public String feignPerson(@PathVariable("id") Integer id) {
+		return "张三:"+port+" id:"+id;
+	}
+
+```
+
+测试 服务启动
+
+可以跟之前一样，启动多个服务集群，查看feign测试结果
+
+#### ribbon 重试机制配置
+---
+
+SpringCloud Feign的客户端负载均衡是通过SpringCloud Ribbon实现的，所以我们可以直接通过配置ribbon客户端的方式来自定义各个服务客户端调用的参数。
+
+```
+
+在feign-consume的yml文件添加配置
+
+	ribbon:
+	  eureka:
+	    enabled: true      #serviceList 交给eureka管理。ribbon就不要配置ServiceList了
+	    
+	cloud-feign-service:
+	  ribbon:
+	    ConnectTimeout: 200 #连接超时时间
+	    ReadTimeout: 1500  #读取超时时间
+	    MaxAutoRetriesNextServer: 1 #重试机制访问几次失败后，更换实例访问 这里设置的是一次
+
+
+在feign-service（服务提供者）的controller中模拟超时，测试重试机制
+
+	@Controller
+	@ConfigurationProperties(prefix="server")
+	public class TestController {
+		private static String port;
+		public void setPort(String port) { 
+		    this.port = port; 
+		  } 
+		@RequestMapping(value = "/person2/{id}", method = RequestMethod.GET)
+		@ResponseBody
+		public String feignPerson(@PathVariable("id") Integer id) throws InterruptedException {
+			//模拟访问超时，测试重试机制。
+			int sleepTime = new Random().nextInt (3000);
+			System.out.println("sleepTime:" + sleepTime);
+			Thread.sleep(sleepTime);
+			return "张三:"+port+" id:"+id;
+		}
+	}
+
+```
+
+测试启动eureka--feign-consume---feign-service两个
+请求查看后台日志
+
+注意：为了上述实现有效，我们需要让Hystrix的超时时间大于Ribbon的超时时间，否则Hystrix命令超时后，该
+命令直接熔断，重试机制就没有任何意义了。
+
+
+
+## 后记
+这就是spring cloud feign基本使用
+
+
+feign参考文献
+
+http://cloud.spring.io/spring-cloud-static/Dalston.SR5/single/spring-cloud.html#spring-cloud-feign
+
+
+
+学无止境。Tomorrow Will Be Better
+
+—— Zhangxs 后记于 2018.0419
