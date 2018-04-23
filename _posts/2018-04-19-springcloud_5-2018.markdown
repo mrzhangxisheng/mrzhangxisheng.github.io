@@ -156,6 +156,162 @@ SpringCloud Feign的客户端负载均衡是通过SpringCloud Ribbon实现的，
 命令直接熔断，重试机制就没有任何意义了。
 
 
+#### hystrix 结合配置
+---
+
+1、重要配置
+
+feign开启hystrix熔断服务 feign.hystrix.enabled= true
+
+feign可以去看官网，默认是false 必须手动开启
+
+yml配置文件
+
+ client
+
+```
+
+	spring:
+	  application:
+	    name: cloud-feign-hystrix
+	  profiles:
+	    active: dev
+	eureka:
+	  instance:
+	    hostname: localhost
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/    
+	ribbon:
+	  eureka:
+	    enabled: true      #serviceList 交给eureka管理。ribbon就不要配置ServiceList了
+	
+	feign-hystrix-service:
+	  ribbon:
+	    ConnectTimeout: 200 #连接超时时间
+	    ReadTimeout: 1500  #读取超时时间
+	    MaxAutoRetriesNextServer: 1 #重试机制访问几次失败后，更换实例访问    
+	 
+	            
+	# feign开启hystrix熔断服务
+	feign:
+	  hystrix:
+	    enabled: true
+	
+	hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 2000 #配置熔断时间2000ms
+	
+	---
+	spring:
+	  profiles: dev
+	server:
+	  port: 82
+	    
+	---
+	spring:
+	  profiles: pro
+	server:
+	  port: 84
+
+service
+
+	spring:
+	  application:
+	    name: feign-hystrix-service
+	  profiles:
+	    active: pro
+	eureka:
+	  instance:
+	    hostname: localhost
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/    
+	ribbon:
+	  eureka:
+	    enabled: true      #serviceList 交给eureka管理。ribbon就不要配置ServiceList了
+	    
+	            
+	# feign开启hystrix熔断服务
+	feign:
+	  hystrix:
+	    enabled: true
+	
+	---
+	spring:
+	  profiles: dev
+	server:
+	  port: 81
+	    
+	---
+	spring:
+	  profiles: pro
+	server:
+	  port: 83
+
+```
+
+2、自定义降级服务
+
+feign服务接口类
+
+```
+
+	import org.springframework.cloud.netflix.feign.FeignClient;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	import org.springframework.web.bind.annotation.RequestParam;
+	
+	import com.zhangxs.cloud.hystrix.HystrixFallback;
+	
+	//@FeignClient(name="feign-hystrix-service",fallback = HystrixFallback.class) //添加降级服务方法
+	@FeignClient(name="feign-hystrix-service",configuration = DisableHystrixConfiguration.class)  //自定义不启用hystrix服务
+	public interface FeignService {
+		
+		@RequestMapping(value="/getUserName", method =RequestMethod.GET)
+		public String getUserName(@RequestParam(required = true, value = "user_name")String user_name);
+	}
+
+新建降级服务类实现feign服务接口
+
+
+	import org.springframework.stereotype.Component;
+	import com.zhangxs.cloud.feign.FeignService;
+		@Component
+		public class HystrixFallback implements FeignService{
+		
+			@Override
+			public String getUserName(String user_name) {
+				return "访问错误";
+			}
+		}
+
+
+```
+
+3、自定义关闭单个feign服务
+
+新建类DisableHystrixConfiguration.class
+
+```
+
+	import org.springframework.context.annotation.Bean;
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.context.annotation.Scope;
+	
+	import feign.Feign;
+	
+	@Configuration
+	public class DisableHystrixConfiguration {
+	    @Bean
+		@Scope("prototype")
+		public Feign.Builder feignBuilder() {
+			return Feign.builder();
+		}
+	}
+
+```
+
+测试
+feign服务接口类开启或注释掉注释来测试降级服务和自定义关闭
 
 ## 后记
 这就是spring cloud feign基本使用
