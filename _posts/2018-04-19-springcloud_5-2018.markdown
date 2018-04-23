@@ -316,6 +316,7 @@ feign服务接口类开启或注释掉注释来测试降级服务和自定义关
 ## 后记
 这就是spring cloud feign基本使用
 
+我项目的地址https://github.com/mrzhangxisheng/spring_cloud_feign
 
 feign参考文献
 
