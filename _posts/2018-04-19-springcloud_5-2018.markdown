@@ -299,7 +299,6 @@ feign服务接口类
 	
 	import feign.Feign;
 	
-	@Configuration
 	public class DisableHystrixConfiguration {
 	    @Bean
 		@Scope("prototype")
