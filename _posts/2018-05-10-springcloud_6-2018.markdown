@@ -1,9 +1,9 @@
 ---
-layout:     post
-title:      Spring Cloud 微服务架构实战(六)
-subtitle:   "spring cloud zuul使用"
-date:       2018-05-10 13:30:00
-author:     "Zhangxs"
+layout: post
+title: Spring Cloud 微服务架构实战(六)
+subtitle: "spring cloud zuul使用"
+date:	2018-05-10 13:30:00
+author:	"Zhangxs"
 header-img: "null.jpg"
 catalog: true
 tags:
