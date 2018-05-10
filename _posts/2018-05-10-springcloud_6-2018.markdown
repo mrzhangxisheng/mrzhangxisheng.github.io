@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Spring Cloud 微服务架构实战(五)"
+title:      "Spring Cloud 微服务架构实战(六)"
 subtitle:   "spring cloud Zuul使用"
 date:       2018-05-10 9:50:00
 author:     "Zhangxs"
@@ -244,6 +244,7 @@ Zuul大部分功能都是通过过滤器来实现的。Zuul中定义了四种标
 
 zuul参考文献
 《spring cloud 微服务实战》
+
 https://www.cnblogs.com/lexiaofei/p/7080257.html
 
 
