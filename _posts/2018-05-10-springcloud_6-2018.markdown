@@ -1,0 +1,253 @@
+---
+layout:     post
+title:      "Spring Cloud 微服务架构实战(五)"
+subtitle:   "spring cloud Zuul使用"
+date:       2018-05-10 9:50:00
+author:     "Zhangxs"
+header-img: "null.jpg"
+catalog: true
+tags:
+    - 技术
+---
+
+
+
+## 概述
+Spring Cloud  Zuul网关的使用
+
+zuul 是netflix开源的一个API Gateway 服务器, 本质上是一个web servlet应用。解决了多个维护之间没有统一前门的问题，提供动态路由，监控，弹性，安全。集成了hystrix熔断及ribbon负载均可。配合eureka让服务路由映射配置非常方便。还有非常强大的过滤器
+
+
+
+<p id = "build"></p>
+---
+
+## 博文
+
+在之前的学习中已经能搭建如下架构
+
+架构图:![Alt text](/img/zuul_1.png)
+
+首先搭建跟架构图一致的项目eureka如下
+
+eureka图:![Alt text](/img/zuul_2.png)
+
+##### zuul服务搭建
+
+新建一个项目
+
+--- 
+
+maven pom.xml添加zuul和eureka依赖
+
+```
+
+	<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	  <modelVersion>4.0.0</modelVersion>
+	  <groupId>com.zhangxs.cloud</groupId>
+	  <artifactId>cloud-eureka-client</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	  <parent>
+	  	<groupId>org.springframework.cloud</groupId>  
+	    <artifactId>spring-cloud-starter-parent</artifactId>  
+	  	<version>Dalston.SR5</version>
+	  </parent>
+	
+		<dependencies>
+		   <dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-eureka</artifactId>
+			</dependency>
+	  		<dependency>
+	       		<groupId>org.springframework.boot</groupId>
+	     	  	<artifactId>spring-boot-starter-web</artifactId>
+	        </dependency>
+	        <dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-zuul</artifactId>
+			</dependency>
+		</dependencies>
+	</project>
+
+```
+
+启动类 添加@EnableZuulProxy开启功能
+
+```
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+	import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+	import org.springframework.context.annotation.Bean;
+	
+	import com.zhangxs.cloud.config.AccessFilter;
+	
+	@SpringBootApplication
+	@EnableZuulProxy//开启zuul
+	@EnableEurekaClient
+	public class FirstServer {
+		public static void main(String[] args) {
+			SpringApplication.run(FirstServer.class,args);
+		}
+	}
+
+```
+
+####### cloud-gateway yml服务映射
+
+
+```
+
+	spring:
+	  application:
+	    name: cloud-gateway
+	eureka:
+	  instance:
+	    hostname: localhost
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+	server:
+	  port: 85
+
+######## 添加映射
+
+
+	zuul:
+	  routes:
+	    api-a:
+	      path: /api-a/**
+	      serviceId: cloud-feign-hystrix
+	    api-b:
+	      path: /api-b/**
+	      serviceId: feign-hystrix-service
+
+```
+
+例：通过http://localhost:85/api-a/getUserName访问
+
+就会映射服务列表对应项目的serviceId，在通过ribbon负载均衡给定相应的服务访问getUserName
+
+注意：因为结合了eureka所以serviceId只要写在注册列表上的服务名就可以了。原始的配置是要ip:端口的。
+
+zuul.routes.api-a-url.path=/api-a-url/**
+
+zuul.routes.api-a-url.url=http://localhost:8080/
+
+
+测试 服务启动
+
+eureka图:![Alt text](/img/zuul_3.png)
+
+外部调用图:![Alt text](/img/zuul_4.png)
+
+#### zuul 过滤器的使用
+---
+
+Zuul大部分功能都是通过过滤器来实现的。Zuul中定义了四种标准过滤器类型，这些过滤器类型对应于请求的典型生命周期。
+
+(1) PRE：这种过滤器在请求被路由之前调用。我们可利用这种过滤器实现身份验证、在集群中选择请求的微服务、记录调试信息等。
+
+(2) ROUTING：这种过滤器将请求路由到微服务。这种过滤器用于构建发送给微服务的请求，并使用Apache HttpClient或Netfilx Ribbon请求微服务。
+
+(3) POST：这种过滤器在路由到微服务以后执行。这种过滤器可用来为响应添加标准的HTTP Header、收集统计信息和指标、将响应从微服务发送给客户端等。
+
+(4) ERROR：在其他阶段发生错误时执行该过滤器。
+
+###### 演示PRE实现简单统一登录验证
+
+```
+
+新建请求登录拦截类，继承ZuulFilter
+
+	/**
+	 * 请求登录拦截
+	 * @author zxs-web
+	 *
+	 */
+	public class AccessFilter extends ZuulFilter{
+	
+		@Override
+		public Object run() {
+			RequestContext ctx = RequestContext.getCurrentContext();
+			HttpServletRequest r=ctx.getRequest();
+			String accessToken=r.getParameter("accessToken");//获取请求token
+			if(accessToken==null){
+				System.out.println("access token is empty");
+				ctx.getResponse().setCharacterEncoding("UTF-8");//设置字符集，避免乱码
+				ctx.getResponse().setHeader("content-type", "text/html;charset=UTF-8");
+				ctx.setSendZuulResponse(false);
+				ctx.setResponseStatusCode(401);//设置状态码
+				ctx.setResponseBody("未登录");
+				return null;
+			}
+			System.out.println("access token ok");
+			return null;
+		}
+	
+		@Override
+		public boolean shouldFilter() {
+			return true;//是否被执行，这里true是所有请求都执行。实际中可以根据一些方法的返回来控制
+		}
+	
+		@Override
+		public int filterOrder() {
+			return 0;//用来顺序
+		}
+	
+		@Override
+		public String filterType() {
+			return "pre";//pre在请求被路由之前执行
+		}
+	}
+
+要被使用还得在启动类添加bean
+
+	@Bean
+	public AccessFilter accessFilter(){
+		return new AccessFilter();
+	}
+
+```
+
+测试启动
+
+外部调用图:![Alt text](/img/zuul_5.png)
+
+外部调用图:![Alt text](/img/zuul_6.png)
+
+
+
+#### hystrix和ribbon配置
+---
+
+因为zuul对hystrixribbon都有集成。可查看jar内部组成
+
+这里添加两个实用的配置
+
+```
+
+	hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000   #zuul路由熔断时间
+	ribbon:
+	  ConnectTimeout: 3000 #zuul路由连接时间
+	  ReadTimeout: 60000  #zuul路由响应时间时间
+
+```
+
+
+
+## 后记
+这就是spring cloud zuul基本使用
+
+注意zuul可以自定义规则实现服务映射，可以很好的调节那些服务是不被外部发现的。
+
+zuul参考文献
+《spring cloud 微服务实战》
+https://www.cnblogs.com/lexiaofei/p/7080257.html
+
+
+
+学无止境。Tomorrow Will Be Better
+
+—— Zhangxs 后记于 2018.0510
