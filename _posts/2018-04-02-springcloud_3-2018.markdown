@@ -410,10 +410,17 @@ Eureka控制台:![Alt text](/img/Eureka_jq8762.png)
 ribbon的一些其他配置
 
 • cloud-ribbon-service.ribbon.ConnectTimeout： 请求连接的超时时间。
+
 • cloud-ribbon-service.ribbon.ReadTimeout： 请求处理的超时时间。
-• cloud-ribbon-service.ribbon.OkToRetryOnAllOpera七ions: 对所有操作请求都进行重试。
+
+• cloud-ribbon-service.ribbon.OkToRetryOnAllOperations: 对所有操作请求都进行重试。
+
 • cloud-ribbon-service.ribbon.MaxAutoRetriesNextServer: 切换实例的重试次数。
+
 • cloud-ribbon-service.ribbon.MaxAutoRetries: 对当前实例的重试次数。
+
+• spring.cloud.loadbalancer.retry.enabled:参数用来开启重试机制，它默认是关闭的.
+
 
 
 学无止境。Tomorrow Will Be Better
