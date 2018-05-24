@@ -1,0 +1,244 @@
+---
+layout:     post
+title:      "Spring Cloud 微服务架构实战(七)"
+subtitle:   "spring cloud config使用"
+date:       2018-05-22 9:50:00
+author:     "Zhangxs"
+header-img: "null.jpg"
+catalog: true
+tags:
+    - 技术
+---
+
+
+
+## 概述
+Spring Cloud  Config的使用
+
+Spring Cloud Config 是 Spring Cloud 团队创建的 一 个全新项目，用来为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，它分为服务端与客户端两个部分。其中服务端也称为分布式配置中心， 它是 一 个独立的微服务应用， 用来连接配置仓库并为客户端提供获取配置信息、 加密／解密信息等访问接口；而客户端则是微服务架构中的各个微服务应用或基础设施， 它们通过指定的配置中心来管理应用资源与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息。Spring Cloud Config 实现了对服务端和客户端中环境变量和属性配置的抽象映射， 所以它除了适用于 Spring 构建的应用程序之外，也可以在任何其他语言运行的应用程序中使用。 由于 Spring Cloud Config 实现的配置中心默认采用 Git 来存储配置信息， 所以使用 Spring Cloud Config 构建的配置服务器， 天然就支持对微服务应用配置信息的版本管理， 并且可以通过 Git 客户端工具来方便地管理和访问配置内容。 当然它也提供了对其他存储方式的支持， 比如 SYN 仓库、 本地化文件系统。
+
+
+
+<p id = "build"></p>
+---
+
+## 博文
+
+###### 我项目地址 https://github.com/mrzhangxisheng/spring-cloud-eureka-ribbon-hystrix-zuul-config.git
+
+###### 我项目远程配置文件地址 https://github.com/mrzhangxisheng/spring_cloud_config.git
+
+
+#### configServer搭建
+
+新建一个项目
+
+--- 
+
+maven pom.xml添加config server引用
+
+```
+
+	<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	  <modelVersion>4.0.0</modelVersion>
+	  <groupId>com.zhangxs.cloud</groupId>
+	  <artifactId>cloud-eureka-client</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	  <parent>
+	  	<groupId>org.springframework.cloud</groupId>  
+	    <artifactId>spring-cloud-starter-parent</artifactId>  
+	  	<version>Dalston.SR5</version>
+	  </parent>
+	
+		<dependencies>
+			 <dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-eureka</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-config-server</artifactId>
+			</dependency>
+		</dependencies>
+	</project>
+
+```
+
+启动类 添加@EnableConfigServer开启功能
+
+```
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	import org.springframework.cloud.config.server.EnableConfigServer;
+	import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+	
+	@EnableEurekaClient
+	@EnableConfigServer
+	@SpringBootApplication
+	public class FirstServer {
+		public static void main(String[] args) {
+			SpringApplication.run(FirstServer.class,args);
+		}
+		
+	}
+
+```
+
+####### configserver yml服务映射
+
+
+```
+
+	spring:
+	  application:
+	    name: configserver
+	  cloud:
+	    config:
+	      server:
+	        git:
+	          uri: https://github.com/mrzhangxisheng/spring_cloud_config/ #git仓库url
+	          searchPaths: spring_cloud_config #配置仓库路径下的相对搜索位置， 可以配置多个。
+	          username: 869011602@qq.com #(git帐号)
+	          password: git密码
+	server:
+	  port: 86
+	
+###### 添加eureka方便为config client 服务映射配值
+
+	eureka:
+	  instance:
+	    hostname: localhost
+	  client:
+	    serviceUrl:
+	      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+
+
+```
+
+
+启动服务测试是服务端是否能拿到git上的配置文件
+http://localhost:86/application/pro
+
+访问配置信息的URL与配置文件的映射关系如下
+
+
+```
+
+	 /{application}/{profile} [/{label}]
+	 /{application} 一 {profile}. yrnl
+	 /{label}/{application}-{profile}.yrnl
+	 /{application}-{profile}.properties
+	 /{label}/{application}-{profile}.properties
+
+```
+
+url会映射{application}-{profile}.properties 对应的配置文件，其中 {label} 对应Git上不同的分支，默认为 master 。
+
+
+浏览器控制台返回图:![Alt text](/img/cloud_config1.png)
+
+这样config server就配置好了。
+
+#### config client配置
+---
+
+这里只配置一个zuul，所有项目配置可以找上面的我项目路径。
+
+pom.xml引入config jar
+
+	        <dependency>
+		        <groupId>org.springframework.cloud</groupId>
+		        <artifactId>spring-cloud-starter-config</artifactId>
+		    </dependency>
+
+```
+	
+	<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	  <modelVersion>4.0.0</modelVersion>
+	  <groupId>com.zhangxs.cloud</groupId>
+	  <artifactId>cloud-eureka-client</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	  <parent>
+	  	<groupId>org.springframework.cloud</groupId>  
+	    <artifactId>spring-cloud-starter-parent</artifactId>  
+	  	<version>Dalston.SR5</version>
+	  </parent>
+	
+		<dependencies>
+		   <dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-eureka</artifactId>
+			</dependency>
+	  		<dependency>
+	       		<groupId>org.springframework.boot</groupId>
+	     	  	<artifactId>spring-boot-starter-web</artifactId>
+	        </dependency>
+	        <dependency>
+		        <groupId>org.springframework.cloud</groupId>
+		        <artifactId>spring-cloud-starter-config</artifactId>
+		    </dependency>
+	        <dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-zuul</artifactId>
+			</dependency>
+		</dependencies>
+	</project>
+
+```
+
+##### bootstrap.yml配置文件的添加
+
+注意配置文件名称必须是 bootstrap.yml或者bootstrap.properties不然会失效。
+
+
+```
+
+	spring:
+	  application:
+	    name: cloudgateway  #和git里的文件名对应
+	  cloud:
+	    config:
+	      label: master #远程仓库的分支
+	      profile: pro #dev 开发环境配置文件 |  test 测试环境  |  pro 正式环境
+	      discovery: 
+	        enabled: true
+	        serviceid: configserver  #config 服务端在eureka上面服务id
+	server:
+	  port: 85
+
+```
+
+
+启动服务顺序 eureka server -->config server -->再就是其他项
+
+
+## 后记
+这就是spring cloud config基本使用
+
+注意config 可以加密及动态刷新配置
+
+config 获取远程仓库都会自动在本地保存一份。下次获取时会先找本地是否存在需要的配置文件
+
+所以如果修改了git上的配置文件需要及时更新的话需要 pom.xml引入 因为他对/refresh端点的实现
+
+```
+
+	<dependency>
+		<groupid>org.springframework.boot</groupid>
+		<artifactid>spring-boot-starter-actuator</artifactid>
+	</dependency>
+
+```
+
+post请求访问一下http://localhost:86/refresh  就更新过来了
+
+
+config参考文献
+《spring cloud 微服务实战》
+
+
+
+学无止境。Tomorrow Will Be Better
+
+—— Zhangxs 后记于 2018.0524
